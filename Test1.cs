@@ -19,7 +19,7 @@ namespace Unit_Test_Enemy
 
             //ACT//
             //Adding an Enemy to the room
-            Program.SpawnEnemy(room);
+            Program.SpawnEnemy(room, EnemyType.Goosifer);
             //Reviecing the active list from EnemyPool
             List<GameObject> activeRoom = EnemyPool.Instance.GetActive();
 
@@ -48,7 +48,7 @@ namespace Unit_Test_Enemy
 
             //ACT//
             //Adding an Enemy to the room
-            Program.SpawnEnemy(room);
+            Program.SpawnEnemy(room, EnemyType.WalkingGoose);
             //The added Enemy
             GameObject enemyTest = room[0];
             //Remove an Enemy from the room
@@ -86,7 +86,7 @@ namespace Unit_Test_Enemy
             //Adding the enemies to roomA
             for (int i = 0; i < 3; i++)
             {
-                Program.SpawnEnemy(roomA);
+                Program.SpawnEnemy(roomA, EnemyType.AggroGoose);
             }
             //The enemy1 has id=1
             GameObject enemy1 = roomA[0];
@@ -100,7 +100,7 @@ namespace Unit_Test_Enemy
             //Add enemies to roomB
             for (int i = 0; i < 2; i++)
             {
-                Program.SpawnEnemy(roomB);
+                Program.SpawnEnemy(roomB, EnemyType.WalkingGoose);
             }
 
 
@@ -131,7 +131,7 @@ namespace Unit_Test_Enemy
             //Adding the enemies to room
             for (int i = 0; i < 3; i++)
             {
-                Program.SpawnEnemy(room);
+                Program.SpawnEnemy(room, EnemyType.WalkingGoose);
             }
 
             //Calling the method PlayerDead()
