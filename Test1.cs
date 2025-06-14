@@ -19,7 +19,7 @@ namespace Unit_Test_Enemy
 
             //ACT//
             //Adding an Enemy to the room
-            Program.SpawnEnemy(room, EnemyType.Goosifer);
+            Program.SpawnEnemy(room, EnemyType.WalkingGoose);
             //Reviecing the active list from EnemyPool
             List<GameObject> activeRoom = EnemyPool.Instance.GetActive();
 
@@ -86,7 +86,7 @@ namespace Unit_Test_Enemy
             //Adding the enemies to roomA
             for (int i = 0; i < 3; i++)
             {
-                Program.SpawnEnemy(roomA, EnemyType.AggroGoose);
+                Program.SpawnEnemy(roomA, EnemyType.WalkingGoose);
             }
             //The enemy1 has id=1
             GameObject enemy1 = roomA[0];
@@ -145,6 +145,16 @@ namespace Unit_Test_Enemy
             Assert.AreEqual(0, EnemyPool.Instance.GetActive().Count);
             //inactive stack has 3 GameObjects
             Assert.AreEqual(3, EnemyPool.Instance.GetInactive().Count);
+        }
+
+        [TestMethod]
+        public void AllEnemyTypers()
+        {
+            //All types of Enemy will spawn
+
+            //ARRANGE//
+            //ACT//
+            //ASSERT//
         }
     }
 }
