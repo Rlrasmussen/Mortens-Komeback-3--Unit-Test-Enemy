@@ -32,7 +32,8 @@ namespace Enemy_spawn
             {
                 gameObject = Create(type);
 
-                gameObject.Id++;
+                gameObject.Id = id;
+                id++;
             }
             else
             {

@@ -10,7 +10,42 @@ namespace Enemy_spawn
     {
         public static void Main(string[] args)
         {
+            List<GameObject> roomA = new List<GameObject>();
+            List<GameObject> roomB = new List<GameObject>();
 
+            for (int i = 0; i < 3; i++)
+            {
+                SpawnEnemy(roomA, EnemyType.WalkingGoose);
+            }
+
+            Console.WriteLine("RoomA: ");
+            foreach (GameObject item in roomA)
+            {
+                Console.WriteLine(item.Id + " + " + item.Type);
+            }
+
+            KillEnemy(roomA);
+
+            Console.WriteLine("RoomA: ");
+            foreach (GameObject item in roomA)
+            {
+                Console.WriteLine(item.Id + " + " + item.Type);
+            }
+
+            SpawnEnemy(roomB, EnemyType.Goosifer);
+
+            Console.WriteLine("RoomB: ");
+            foreach (GameObject item in roomB)
+            {
+                Console.WriteLine(item.Id + " + " + item.Type);
+            }
+
+            Player.Instance.IsAlive = false;
+            PlayerDead();
+
+            Console.WriteLine(EnemyPool.Instance.GetInactive().Count);
+
+            Console.ReadKey();
         }
 
         /// <summary>
@@ -48,6 +83,15 @@ namespace Enemy_spawn
                 {
                     EnemyPool.Instance.ReleaseObject(EnemyPool.Instance.GetActive()[0]);
                 }
+            }
+        }
+
+
+        public static void PlayerDeadTwo(List<GameObject> gameObjects)
+        {
+            if (Player.Instance.IsAlive == false)
+            {
+                gameObjects.Clear();
             }
         }
     }

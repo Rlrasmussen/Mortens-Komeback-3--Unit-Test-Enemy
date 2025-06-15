@@ -147,14 +147,106 @@ namespace Unit_Test_Enemy
             Assert.AreEqual(3, EnemyPool.Instance.GetInactive().Count);
         }
 
+        /// <summary>
+        /// When a GameObject is getting reused from the Objectpool the type is changed
+        /// </summary>
         [TestMethod]
-        public void AllEnemyTypers()
+        public void EnemyChangeTypeInNewRoom()
         {
-            //All types of Enemy will spawn
+            //When an Enemy is respawned in a new room, it can changes the type. If the id is still the samme, it will be the same Object 
 
             //ARRANGE//
-            //ACT//
+            //roomA and roomB with enemies
+            List<GameObject> roomA = new List<GameObject>();
+            List<GameObject> roomB = new List<GameObject>();
+
+
+            //ACT 1//
+            //Add 3 Enemy of WalkingGoose to the room
+            for (int i = 0; i < 3; i++)
+            {
+                Program.SpawnEnemy(roomA, EnemyType.WalkingGoose);
+            }
+            //Enemy with id = 1       
+            GameObject enemy1 = roomA[0];
+
+            //ASSERT 1//
+            //enemy1 has id=1 and type is WalkingGoose
+            Assert.AreEqual(enemy1.Id, 1);
+            Assert.AreEqual(EnemyType.WalkingGoose, enemy1.Type);
+
+            //ACT 2//
+            //Kill one Enemy
+            Program.KillEnemy(roomA);
+            //Spawn one Enemy in roomB
+            Program.SpawnEnemy(roomB, EnemyType.AggroGoose);
+            //enemy2 is the first Enemy in roomB
+            GameObject enemy2 = roomB[0];
+
             //ASSERT//
+            //enemy1 and enemy2 has samme id which is 1
+            Assert.AreEqual(enemy1.Id, enemy2.Id);
+            //enemy1 has changed type to AggroGoose
+            Assert.AreEqual(EnemyType.AggroGoose, enemy1.Type);
+        }
+
+        [TestMethod]
+        public void AllEnemy()
+        {
+            //There should be 16 Enemy's in the ObjectPool if the game is won
+
+            //ARRANGE//
+            //4 rooms of Enemy's
+            List<GameObject> roomA = new List<GameObject>(3);
+            List<GameObject> roomB = new List<GameObject>(4);
+            List<GameObject> roomC = new List<GameObject>(7);
+            List<GameObject> roomD = new List<GameObject>(1 + 15); //Bossfigth with Goosifer and wave of 15 Enemy
+
+
+            //ACT//
+            //Adding and killing enemies
+            //roomA
+            for (int i = 0; i < 3; i++)
+            {
+                Program.SpawnEnemy(roomA, EnemyType.WalkingGoose);
+            }
+            for (int i = 0; i < 3; i++)
+            {
+                Program.KillEnemy(roomA);
+            }
+            //roomB
+            for (int i = 0; i < 4; i++)
+            {
+                Program.SpawnEnemy(roomB, EnemyType.AggroGoose);
+            }
+            for (int i = 0; i < 4; i++)
+            {
+                Program.KillEnemy(roomB);
+            }
+            //roomC
+            for (int i = 0; i < 7; i++)
+            {
+                Program.SpawnEnemy(roomC, EnemyType.WalkingGoose);
+            }
+            for (int i = 0; i < 7; i++)
+            {
+                Program.KillEnemy(roomC);
+            }
+            //roomD
+            Program.SpawnEnemy(roomD, EnemyType.Goosifer);
+            for (int i = 0; i < 15; i++)
+            {
+                Program.SpawnEnemy(roomD, EnemyType.AggroGoose);
+            }
+
+            //Player win and ISAlive is sat to false and all the objects is back in the ObjectPool
+            Player.Instance.IsAlive = false;
+            Program.PlayerDead();
+
+
+            //ASSERT//
+            Assert.IsFalse(Player.Instance.IsAlive);
+            Assert.AreEqual(16, EnemyPool.Instance.GetInactive().Count);
         }
     }
 }
